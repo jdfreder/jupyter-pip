@@ -12,7 +12,7 @@ setup(
     keywords='python ipython javascript nbextension deployment pip install package extension',
     classifiers=['Development Status :: 4 - Beta',
                  'Programming Language :: Python',
-                 'License :: OSI Approved :: New BSD License'],
+                 'License :: OSI Approved'],
     packages=['ipythonpip'],
     include_package_data=True,
 )
