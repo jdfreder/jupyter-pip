@@ -20,7 +20,7 @@ from setuptools import setup
 
 setup(
     name='myplugin',
-    packages=['jsobject'],
+    packages=['myplugin'],
     # ... more setup.py stuff here ...
 )
 ```
@@ -37,7 +37,7 @@ except:
 
 setup(
     name='myplugin',
-    packages=['jsobject'],
+    packages=['myplugin'],
     # ... more setup.py stuff here ...
     install_requires=["ipython-pip"],
     cmdclass=cmdclass('myplugin', 'myplugin/init'),
@@ -45,6 +45,23 @@ setup(
 ```
 
 The second argument to the `cmdclass` call is optional.  If specified, the JS module will be loaded alongside the notebook automatically.  **Note that for widget packages, typically this isn't this best idea.  Instead the line would read `cmdclass=cmdclass('myplugin')` and the widget framework would load the JS when the widget is constructed.**
+
+## Copy&paste
+
+```python
+try:
+    from ipythonpip import cmdclass
+except:
+    cmdclass = lambda *args: None
+```
+
+and  
+
+```python
+    install_requires=["ipython-pip"],
+    cmdclass=cmdclass('myplugin', 'myplugin/init'),
+```
+
 
 ## License
 New BSD (see `./LICENSE` file).
