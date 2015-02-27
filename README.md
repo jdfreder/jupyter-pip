@@ -1,4 +1,4 @@
-# ipython-pip
+# jupyter-pip
 Allows Jupyter notebook extension writers to make their extension pip installable!
 
 Specifically, if you have a module that you've written which is intended for use in the Jupyter notebook and also has Javascript associated with it, this is designed to solve the distribution problem.
