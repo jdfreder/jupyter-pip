@@ -1,4 +1,9 @@
-def cmdclass(path, enable=None, user=True):
+def _is_root():
+    """Checks if the user is rooted."""
+    import os
+    return os.geteuid() == 0
+
+def cmdclass(path, enable=None, user=None):
     """Build nbextension cmdclass dict for the setuptools.setup method.
 
     Parameters
@@ -8,6 +13,10 @@ def cmdclass(path, enable=None, user=True):
     enable: [str=None]
         Extension to "enable".  Enabling an extension causes it to be loaded
         automatically by the IPython notebook.
+    user: [bool=None]
+        Whether or not the nbextension should be installed in user mode.
+        If this is undefined, the script will install as user mode IF the
+        installer is not sudo.
 
     Usage
     -----
@@ -36,6 +45,10 @@ def cmdclass(path, enable=None, user=True):
 
     from IPython.html.nbextensions import install_nbextension
     from IPython.html.services.config import ConfigManager
+
+    # Check if the user flag was set.
+    if user is None:
+        user = not _is_root()
 
     # Get the path of the extension
     calling_file = extract_stack()[-2][0]
