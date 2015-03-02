@@ -1,4 +1,4 @@
-def cmdclass(path, enable=None):
+def cmdclass(path, enable=None, user=True):
     """Build nbextension cmdclass dict for the setuptools.setup method.
 
     Parameters
@@ -46,7 +46,7 @@ def cmdclass(path, enable=None):
 
     # Installs the nbextension
     def run_nbextension_install(develop):
-        install_nbextension(extension_dir, symlink=develop)
+        install_nbextension(extension_dir, symlink=develop, user=user)
         if enable is not None:
             print("Enabling the extension ...")
             cm = ConfigManager()

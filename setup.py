@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='ipython-pip',
-    version='0.1',
+    version='0.2',
     description='Allows IPython notebook extension authors to make their extension pip installable!',
     author='Jonathan Frederic',
     author_email='jon.freder@gmail.com',
