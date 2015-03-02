@@ -8,16 +8,16 @@ In setup.py
 
 ```python
 try:
-    from ipythonpip import cmdclass
+    from jupyterpip import cmdclass
 except:
     import pip, importlib
-    pip.main(['install', 'ipython-pip']); cmdclass = importlib.import_module('ipythonpip').cmdclass
+    pip.main(['install', 'jupyter-pip']); cmdclass = importlib.import_module('jupyterpip').cmdclass
 ```
 
 and inside the `setup(...)` call
 
 ```python
-    install_requires=["ipython-pip"],
+    install_requires=["jupyter-pip"],
     cmdclass=cmdclass('myplugin', 'myplugin/init'),
 ```
 
@@ -49,16 +49,16 @@ All you need to do is add a try import block and two entries to the setup call t
 from setuptools import setup
 
 try:
-    from ipythonpip import cmdclass
+    from jupyterpip import cmdclass
 except:
     import pip, importlib
-    pip.main(['install', 'ipython-pip']); cmdclass = importlib.import_module('ipythonpip').cmdclass
+    pip.main(['install', 'jupyter-pip']); cmdclass = importlib.import_module('jupyterpip').cmdclass
 
 setup(
     name='myplugin',
     packages=['myplugin'],
     # ... more setup.py stuff here ...
-    install_requires=["ipython-pip"],
+    install_requires=["jupyter-pip"],
     cmdclass=cmdclass('myplugin', 'myplugin/init'),
 )
 ```
