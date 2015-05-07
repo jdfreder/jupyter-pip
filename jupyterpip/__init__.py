@@ -1,7 +1,11 @@
 def _is_root():
     """Checks if the user is rooted."""
-    import os
-    return os.geteuid() == 0
+    import ctypes, os
+    try:
+        return os.geteuid() == 0
+    except AttributeError:
+        return ctypes.windll.shell32.IsUserAnAdmin() != 0
+    return False
 
 def cmdclass(path, enable=None, user=None):
     """Build nbextension cmdclass dict for the setuptools.setup method.
