@@ -25,7 +25,7 @@ def cmdclass(path, enable=None, user=None):
     Usage
     -----
     For automatic loading:
-    # Assuming `./extension` is the relative path to the JS files and 
+    # Assuming `./extension` is the relative path to the JS files and
     # `./extension/main.js` is the file that you want automatically loaded.
     setup(
         name='extension',
@@ -47,8 +47,14 @@ def cmdclass(path, enable=None, user=None):
     from os.path import dirname, abspath, join, exists, realpath
     from traceback import extract_stack
 
-    from IPython.html.nbextensions import install_nbextension
-    from IPython.html.services.config import ConfigManager
+    try:
+        # IPython/Jupyter 4.0
+        from notebook.nbextensions import install_nbextension
+        from notebook.services.config import ConfigManager
+    except ImportError:
+        # Pre-schism
+        from IPython.html.nbextensions import install_nbextension
+        from IPython.html.services.config import ConfigManager
 
     # Check if the user flag was set.
     if user is None:
@@ -84,7 +90,7 @@ def cmdclass(path, enable=None, user=None):
             develop.run(self)
             print("Installing nbextension ...")
             run_nbextension_install(True)
-    
+
     return {
         'install': InstallCommand,
         'develop': DevelopCommand,
