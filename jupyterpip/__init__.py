@@ -69,7 +69,12 @@ def cmdclass(path, enable=None, user=None):
 
     # Installs the nbextension
     def run_nbextension_install(develop):
-        install_nbextension(extension_dir, symlink=develop, user=user)
+        import sys
+        sysprefix = hasattr(sys, 'real_prefix')
+        if sysprefix:
+            install_nbextension(extension_dir, symlink=develop, sys_prefix=sysprefix)
+        else:
+            install_nbextension(extension_dir, symlink=develop, user=user)
         if enable is not None:
             print("Enabling the extension ...")
             cm = ConfigManager()
