@@ -44,7 +44,7 @@ def cmdclass(path, enable=None, user=None):
         cmdclass=cmdclass('extension'),
     )
     """
-
+    import warnings
     from setuptools.command.install import install
     from setuptools.command.develop import develop
     from os.path import dirname, join, exists, realpath
@@ -60,9 +60,11 @@ def cmdclass(path, enable=None, user=None):
             from IPython.html.nbextensions import install_nbextension
             from IPython.html.services.config import ConfigManager
         except ImportError:
-            print("No jupyter notebook found in your environment."
-                  "Please issue 'pip install jupyter'")
-            raise
+            warnings.warn("No jupyter notebook found in your environment."
+                          "Hence jupyter nbextensions were not installed"
+                          "If you would like to have them,"
+                          "please issue 'pip install jupyter'")
+            return {}
 
     # Check if the user flag was set.
     if user is None:
