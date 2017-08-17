@@ -1,11 +1,13 @@
 def _is_root():
     """Checks if the user is rooted."""
-    import ctypes, os
+    import os
+    import ctypes
     try:
         return os.geteuid() == 0
     except AttributeError:
         return ctypes.windll.shell32.IsUserAnAdmin() != 0
     return False
+
 
 def cmdclass(path, enable=None, user=None):
     """Build nbextension cmdclass dict for the setuptools.setup method.
@@ -13,7 +15,8 @@ def cmdclass(path, enable=None, user=None):
     Parameters
     ----------
     path: str
-        Directory relative to the setup file that the nbextension code lives in.
+        Directory relative to the setup file that the nbextension code
+        lives in.
     enable: [str=None]
         Extension to "enable".  Enabling an extension causes it to be loaded
         automatically by the IPython notebook.
@@ -44,7 +47,7 @@ def cmdclass(path, enable=None, user=None):
 
     from setuptools.command.install import install
     from setuptools.command.develop import develop
-    from os.path import dirname, abspath, join, exists, realpath
+    from os.path import dirname, join, exists, realpath
     from traceback import extract_stack
 
     try:
@@ -53,8 +56,13 @@ def cmdclass(path, enable=None, user=None):
         from notebook.services.config import ConfigManager
     except ImportError:
         # Pre-schism
-        from IPython.html.nbextensions import install_nbextension
-        from IPython.html.services.config import ConfigManager
+        try:
+            from IPython.html.nbextensions import install_nbextension
+            from IPython.html.services.config import ConfigManager
+        except ImportError:
+            print("No jupyter notebook found in your environment."
+                  "Please issue 'pip install jupyter'")
+            raise
 
     # Check if the user flag was set.
     if user is None:
@@ -72,7 +80,8 @@ def cmdclass(path, enable=None, user=None):
         import sys
         sysprefix = hasattr(sys, 'real_prefix')
         if sysprefix:
-            install_nbextension(extension_dir, symlink=develop, sys_prefix=sysprefix)
+            install_nbextension(
+                extension_dir, symlink=develop, sys_prefix=sysprefix)
         else:
             install_nbextension(extension_dir, symlink=develop, user=user)
         if enable is not None:
